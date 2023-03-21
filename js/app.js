@@ -6,7 +6,7 @@ const fechaInput = document.querySelector('#fecha');
 const horaInput = document.querySelector('#hora');
 const sintomasInput = document.querySelector('#sintomas');
 
-// User interface
+// User interface UI
 const formulario = document.querySelector('#nueva-cita');
 const contenedorCitas = document.querySelector('#citas');
 
@@ -14,6 +14,11 @@ class Citas {
     constructor() {
         this.citas = [];
     };
+
+    agregarCita(cita) {
+        this.citas= [...this.citas, cita];
+        console.log(this.citas);
+    }
 };
 
 class UI {
@@ -90,6 +95,26 @@ function nuevaCita(e) {
 
         return;
     };
+    
+    // generar un id unico
+    citaObj.id = Date.now();
+    // Creando una nuvea cita
+    administrarCitas.agregarCita({...citaObj});
 
+    // reiniciar el objeto para la validacion
+    reiniciarObjeto();
+    
+    // reiniciar fromulario
+    formulario.reset();
 
+    // mostrar el HTML
 };
+
+function reiniciarObjeto() {
+    citaObj.mascota = '';
+    citaObj.propietario = '';
+    citaObj.telefono = '';
+    citaObj.fecha = '';
+    citaObj.hora = '';
+    citaObj.sintomas = '';
+}
