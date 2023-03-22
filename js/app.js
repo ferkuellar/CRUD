@@ -16,9 +16,12 @@ class Citas {
     };
 
     agregarCita(cita) {
-        this.citas= [...this.citas, cita];
-        console.log(this.citas);
-    }
+        this.citas= [...this.citas, cita];        
+    };
+
+    eliminarCita(id) {
+        this.citas = this.citas.filter(cita => cita.id !== id);
+    };
 };
 
 class UI {
@@ -32,7 +35,7 @@ class UI {
             divMensaje.classList.add('alert-danger');
         } else {
             divMensaje.classList.add('alert-success');
-        }
+        };
 
         // mensaje de error
         divMensaje.textContent = mensaje;
@@ -88,6 +91,13 @@ class UI {
                 <span class = "font-weight-bolder">Sintomas:</span> ${sintomas}
             `;
 
+            // Boton para eliminar cita
+            const btnEliminar = document.createElement('button');
+            btnEliminar.classList.add('btn', 'btn-danger', 'mr-2');
+            btnEliminar.innerHTML= 'Eliminar';
+
+            btnEliminar.onclick = () => eliminarCita(id);
+
             // agergar los parrafos al divCita
             divCita.appendChild(mascotaParrafo);
             divCita.appendChild(propietarioParrafo);
@@ -95,6 +105,7 @@ class UI {
             divCita.appendChild(fechaParrafo);
             divCita.appendChild(horaParrafo);
             divCita.appendChild(sintomasParrafo);
+            divCita.appendChild(btnEliminar);
 
             // Agregar citas en HTML
             contenedorCitas.appendChild(divCita);
@@ -177,4 +188,13 @@ function reiniciarObjeto() {
     citaObj.fecha = '';
     citaObj.hora = '';
     citaObj.sintomas = '';
-}
+};
+
+function eliminarCita(id) {
+    // Eliminar la cita
+    administrarCitas.eliminarCita(id);
+    // Muestre mensaje
+    ui.imprimirAlerta('La cita se elimino correctamente');
+    // Refrescar las citas
+    ui.imprimirCitas(administrarCitas);
+};
