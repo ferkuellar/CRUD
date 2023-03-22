@@ -24,6 +24,10 @@ class Citas {
     eliminarCita(id) {
         this.citas = this.citas.filter(cita => cita.id !== id);
     };
+
+    editarCita(citaActualizada) {
+        this.citas = this.citas.map(cita => cita.id === citaActualizada.id ? citaActualizada : cita);
+    };
 };
 
 class UI {
@@ -32,7 +36,7 @@ class UI {
         const divMensaje = document.createElement('div');
         divMensaje.classList.add('text-center', 'alert', 'd-block', 'col-12');
 
-        // agregar clase al tipo de error
+        // Agregar clase al tipo de error
         if(tipo == 'error'){
             divMensaje.classList.add('alert-danger');
         } else {
@@ -42,7 +46,7 @@ class UI {
         // mensaje de error
         divMensaje.textContent = mensaje;
 
-        // agergar al DOM
+        // Agergar al DOM
 
         document.querySelector('#contenido').insertBefore(divMensaje, document.querySelector('.agregar-cita'));
 
@@ -178,7 +182,11 @@ function nuevaCita(e) {
         ui.imprimirAlerta('Se Editó Correctamente');
 
         // pasar el objeto de la cita a edicion
+        administrarCitas.editarCita({...citaObj})
+
+        // Regresar el texto del boton a su estado original
         formulario.querySelector('button[type = "submit').textContent = 'Crear Cita';
+
         // Quitar modo edicion
         editando = false;
 
